@@ -12,33 +12,27 @@ void find_arr() {
 	for (int len1 = 1; len1 <= strlen / 3; len1++) {
 		
 		if (len1 > strlen || len1 > 9) break;
-		int a1 = stoi(S.substr(0, len1)); // 0인덱스부터 len1길이만큼 잘라냄
-		//cout << "a1: " << a1 << "\n";
-		if (S[len1] == '0') continue; // a2항 첫 글자가 '0'이면 불가능한 경우의 수열임
-		// len2: a2의 길이
+		int a1 = stoi(S.substr(0, len1));
+		if (S[len1] == '0') continue;
 		for (int len2 = len1; len2 <= strlen / 2; len2++) {
 			if (len1 + len2 >= strlen || len2 > 9) break;
 			int a2 = stoi(S.substr(len1, len2));
-			//cout << "a2: " << a2 << "\n";
-			int d = a2 - a1; // 공차
+			int d = a2 - a1;
 			if (d <= 0) continue;
 
 			bool possible = true;
-			int cur = a2; // 지금까지 구한 마지막 항
-			int curidx = len1 + len2; // a2끝자리 인덱스
+			int cur = a2;
+			int curidx = len1 + len2;
 			vector<int> tmpV = { a1, a2 };
 
 			while (curidx < strlen) {
-				int nxt_a = cur + d; // 다음항의 크기
+				int nxt_a = cur + d;
 				string nxt_a_s = to_string(nxt_a);
-				//cout << "nxt_a_s:" << nxt_a_s << "\n";
-				//cout << S[curidx] << "\n";
 				if (S.find(nxt_a_s, curidx) != curidx) break;
 				curidx += nxt_a_s.size();
 				cur = nxt_a;
 				tmpV.push_back(cur);
 			}
-			// 남은 문자열(left) 추가
 			if (curidx < strlen) {
 				string left = S.substr(curidx);
 				if (S.substr(curidx)[0] == '0') {
@@ -49,10 +43,6 @@ void find_arr() {
 				tmpV.push_back(stoi(left));
 			}
 			while (tmpV.size() >= 3) {
-				//for (auto c : tmpV) {
-				//	cout << c << " ";
-				//}
-				//cout << "\n\n";
 				int size = tmpV.size();
 				ll a_last = tmpV[size - 1];
 				ll div = tmpV[size - 2];
@@ -74,10 +64,3 @@ int main() {
 	if (ans == 1e9) ans = 0;
 	cout << ans;
 }
-
-/*
-	1. 첫 항의 길이를 1부터 늘려가면서 체크하기(항의 자릿수는 str / 3을 넘을 수 없음)
-	1-1. 두 번째 항의 길이를 첫 항의 길이부터 늘려가면서 체크하기
-		 공차가 양의 정수이기 때문에 첫 항보다 작아질 수 없기 때문
-	2. 2번째 항까지 체크를 하고, 공차를 확인한 후 가능한 수열인지 확인
-*/

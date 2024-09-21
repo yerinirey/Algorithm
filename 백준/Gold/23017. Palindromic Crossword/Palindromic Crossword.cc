@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <queue>
 using namespace std; 
-char map[51][51];
+char map[1001][1001];
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     int T; cin >> T;
